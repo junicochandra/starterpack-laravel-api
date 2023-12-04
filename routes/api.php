@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Mail\SendEmail;
+use App\Jobs\SendEmailJob;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +25,7 @@ Route::group([ 'middleware' => 'api', 'prefix' => 'auth' ], function ($router) {
 });
 
 Route::get('send-email', function(){
-    $email = new SendEmail();
-    Mail::to('junicodwi.chandra@gmail.com')->send($email);
-
+    $data['email'] = 'okinigame@gmail.com';
+    dispatch(new SendEmailJob($data));
     return 'success';
 });
