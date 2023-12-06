@@ -24,8 +24,13 @@ Route::group([ 'middleware' => 'api', 'prefix' => 'auth' ], function ($router) {
     Route::post('me', [AuthController::class, 'me']);
 });
 
-Route::get('send-email', function(){
-    $data['email'] = 'okinigame@gmail.com';
+Route::post('send-email', function(Request $request) {
+    $data['email'] = $request->email;
+    $data['subject'] = $request->subject;
+    $data['sendFrom'] = $request->sendFrom;
+    $data['name'] = $request->name;
+    $data['content'] = $request->content;
+    
     dispatch(new SendEmailJob($data));
-    return 'success';
+    return response()->json(['message' => 'Send success']);
 });
