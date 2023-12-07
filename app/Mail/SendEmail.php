@@ -30,8 +30,11 @@ class SendEmail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address($this->mailData['sendFrom'], $this->mailData['name']),
+            from: new Address($this->mailData['from'], $this->mailData['name']),
             subject: $this->mailData['subject'],
+            cc: $this->mailData['cc'] ?? [],
+            bcc: $this->mailData['bcc'] ?? [],
+            to: $this->mailData['to'] ?? [],
         );
     }
 
