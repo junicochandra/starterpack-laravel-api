@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmailJob;
 
+/**
+ * @OA\Tag(
+ *     name="Email",
+ *     description="",
+ * )
+ */
 class SendEmailController extends Controller
 {
     public function __construct()
@@ -19,7 +25,7 @@ class SendEmailController extends Controller
      *      tags={"Email"},
      *      @OA\RequestBody(
      *          required=true,
-     *          description="Form send email",
+     *          description="Send Email Form",
      *          @OA\JsonContent(
      *              required={"email"},
      *              @OA\Property(property="email", type="string"),

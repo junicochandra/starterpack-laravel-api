@@ -9,6 +9,12 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
+/**
+ * @OA\Tag(
+ *     name="Auth",
+ *     description="Authentication and Authorization with JWT Token",
+ * )
+ */
 class AuthController extends Controller
 {
     /**
@@ -21,6 +27,46 @@ class AuthController extends Controller
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/auth/register",
+     *      summary="Register",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Register Form",
+     *          @OA\JsonContent(
+     *              required={"name", "email", "password"},
+     *              @OA\Property(property="name", type="string"),
+     *              @OA\Property(property="email", type="string"),
+     *              @OA\Property(property="password", type="string"),
+     *              @OA\Property(property="password_confirmation", type="string"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="code", type="integer", format="int32", example=200),
+     *              @OA\Property(property="message", type="string", example="Register successfull!"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=422,
+     *          description="Unprocessable entity error"
+     *      ),
+     *      @OA\Response(
+     *          response=500,
+     *          description="Failed operation",
+     *          @OA\JsonContent(
+     *              type="object",
+     *              @OA\Property(property="code", type="integer", format="int32", example=500),
+     *              @OA\Property(property="message", type="string", example="Register fail!"),
+     *          ),
+     *      )
+     * )
+     */
     public function register()
     {
         $validator = Validator::make(request()->all(), [
@@ -40,15 +86,39 @@ class AuthController extends Controller
         ]);
 
         if($user){
-            return response()->json(['message' => 'Register successfull!']);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Register successfull!'
+            ]);
         }else{
-            return response()->json(['message' => 'Register fail!']);
+            return response()->json([
+                'status' => 500,
+                'message' => 'Register fail!'
+            ]);
         }
     }
 
     /**
-     * Get a JWT via given credentials.
-     *
+     * @OA\Post(
+     *      path="/api/auth/login",
+     *      summary="Get a JWT via given credentials.",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(property="email", type="string"),
+     *              @OA\Property(property="password", type="string"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Get token",
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      )
+     * )
      * @return \Illuminate\Http\JsonResponse
      */
     public function login()
@@ -72,8 +142,25 @@ class AuthController extends Controller
     }
 
     /**
-     * Get the authenticated User.
-     *
+     * @OA\Post(
+     *      path="/api/auth/me",
+     *      summary="Get the authenticated User",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(property="token", type="string"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          description="Unauthenticated",
+     *      )
+     * )
      * @return \Illuminate\Http\JsonResponse
      */
     public function me()
@@ -82,8 +169,21 @@ class AuthController extends Controller
     }
 
     /**
-     * Log the user out (Invalidate the token).
-     *
+     * @OA\Post(
+     *      path="/api/auth/logout",
+     *      summary="Log the user out (Invalidate the token).",
+     *      tags={"Auth"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          @OA\JsonContent(
+     *              @OA\Property(property="token", type="string"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successfully logged out",
+     *      ),
+     * )
      * @return \Illuminate\Http\JsonResponse
      */
     public function logout()
@@ -94,8 +194,15 @@ class AuthController extends Controller
     }
 
     /**
-     * Refresh a token.
-     *
+     * @OA\Post(
+     *      path="/api/auth/refresh",
+     *      summary="Refresh a token.",
+     *      tags={"Auth"},
+     *      @OA\Response(
+     *          response=200,
+     *          description="Get token",
+     *      ),
+     * )
      * @return \Illuminate\Http\JsonResponse
      */
     public function refresh()
