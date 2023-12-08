@@ -1,0 +1,80 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "StarterPack Laravel API",
+        "description": "API Documentation",
+        "contact": {
+            "name": "Junico Dwi Chandra",
+            "email": "junicodwi.chandra@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/module/email/send": {
+            "post": {
+                "tags": [
+                    "Email"
+                ],
+                "summary": "Send Email",
+                "operationId": "888a51d4f07b49d75607b6e3a81d45f1",
+                "requestBody": {
+                    "description": "Form send email",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string"
+                                    },
+                                    "subject": {
+                                        "type": "string"
+                                    },
+                                    "from": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "to": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "cc": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "bcc": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    },
+                    "500": {
+                        "description": "Failed operation"
+                    }
+                }
+            }
+        }
+    }
+}
