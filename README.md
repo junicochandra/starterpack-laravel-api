@@ -23,6 +23,8 @@ Utilize Laravel's powerful job queue system to send emails asynchronously, impro
 Clone this repository and follow the installation guide to set up your project quickly.
 ```bash
 git clone https://github.com/junicochandra/starterpack-laravel-api.git
+
+composer install
 ```
 ### Configuration
 Customize the project configuration according to your application's needs, including database settings, environment configurations, and other variables.
