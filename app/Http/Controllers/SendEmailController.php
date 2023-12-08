@@ -7,6 +7,10 @@ use App\Jobs\SendEmailJob;
 
 class SendEmailController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
     public function send(Request $request){
         try {
             $data = $request->json()->all();
