@@ -25,6 +25,8 @@ Clone this repository and follow the installation guide to set up your project q
 git clone https://github.com/junicochandra/starterpack-laravel-api.git
 
 composer install
+
+php artisan key:generate
 ```
 ### Configuration
 Customize the project configuration according to your application's needs, including database settings, environment configurations, and other variables.
@@ -52,6 +54,11 @@ QUEUE_CONNECTION=database
 SESSION_DRIVER=file
 SESSION_LIFETIME=120
 ```
+Once you've completed the setup of your environment, execute the following command.
+```bash
+php artisan migrate
+```
+
 ### JWT ENV
 [More documentation](https://jwt-auth.readthedocs.io/en/develop)
 ```bash
