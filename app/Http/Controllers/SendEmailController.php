@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\RabbitSendEmailJob;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmailJob;
 
@@ -16,7 +17,7 @@ class SendEmailController extends Controller
     public function __construct()
     {
         $this->middleware('auth:api');
-    }    
+    }
 
     /**
      * @OA\Post(
@@ -48,11 +49,22 @@ class SendEmailController extends Controller
      *      )
      * )
      */
-    public function send(Request $request){
+    public function send(Request $request)
+    {
         try {
             $data = $request->json()->all();
-
             dispatch(new SendEmailJob($data));
+            return response()->json(['message' => 'Send email success!'], 200);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Error while processing the request', 'error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function sendByRabbitMq(Request $request)
+    {
+        try {
+            $data = $request->json()->all();
+            dispatch(new RabbitSendEmailJob($data));
             return response()->json(['message' => 'Send email success!'], 200);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Error while processing the request', 'error' => $e->getMessage()], 500);

@@ -14,4 +14,5 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
 Route::group(['middleware' => 'api', 'prefix' => 'module/email'], function () {
     Route::post('send', [SendEmailController::class, 'send']);
+    Route::post('send-by-rabbitmq', [SendEmailController::class, 'sendByRabbitMq']);
 });
