@@ -11,56 +11,40 @@
 Welcome to StarterPack Laravel API! This is a project specifically designed to expedite the development of Laravel-based applications, with a primary focus on API development. By utilizing this StarterPack, you'll have a robust foundation for building reliable and efficient web services using Laravel, one of the most popular PHP frameworks.
 
 ## Key Features
-### Simplified Project Structure
-StarterPack Laravel API provides a well-organized project structure, helping you avoid confusion in the initial project setup and allowing you to focus on feature development.
-### Integrated JWT Bearer Authentication
-Experience secure authentication using the JWT Bearer token system. This integration allows for seamless and token-based user authentication, ensuring a high level of security for your API endpoints.
-### Email Notification System with Job Queue
-Utilize Laravel's powerful job queue system to send emails asynchronously, improving the performance and responsiveness of your application. Schedule and process email sending jobs efficiently in the background, enhancing user experience.
-
+-   #### Simplified Project Structure
+    StarterPack Laravel API provides a well-organized project structure, helping you avoid confusion in the initial project setup and allowing you to focus on feature development.
+-   #### Integrated JWT Bearer Authentication
+    Experience secure authentication using the JWT Bearer token system. This integration allows for seamless and token-based user authentication, ensuring a high level of security for your API endpoints.
+-   #### Send Email with Job Queue Laravel or RabbitMq
+    Enables asynchronous email sending using Laravel Job Queue or RabbitMQ to enhance performance and avoid execution blocking.
+-   #### API Documentation
+    Utilizes the Laravel API Documentation Package integrated with Swagger to generate automatic and interactive API documentation based on the source code.
+    
 ## Getting Started
-### Installation
+#### 1. Installation
 Clone this repository and follow the installation guide to set up your project quickly.
 ```bash
 git clone https://github.com/junicochandra/starterpack-laravel-api.git
-
-composer install
-
-php artisan key:generate
 ```
-### Configuration
+Install Dependencies
+```bash
+composer install
+```
+
+#### 2. Configuration
 Customize the project configuration according to your application's needs, including database settings, environment configurations, and other variables.
 ```bash
-DB_CONNECTION=mysql
-DB_HOST=localhost
-DB_PORT=3306
-DB_DATABASE=laravel
-DB_USERNAME=root
-DB_PASSWORD=root
-
-MAIL_DRIVER=smtp
-MAIL_HOST=smtp.gmail.com
-MAIL_PORT=465
-MAIL_USERNAME=someone@username.com
-MAIL_PASSWORD=app_password_your_email
-MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS=someone@username.com
-MAIL_FROM_NAME=”${APP_NAME}”
-
-BROADCAST_DRIVER=log
-CACHE_DRIVER=file
-FILESYSTEM_DISK=local
-QUEUE_CONNECTION=database
-SESSION_DRIVER=file
-SESSION_LIFETIME=120
+cp .env.example .env
 ```
 Once you've completed the setup of your environment, execute the following command.
 ```bash
+php artisan key:generate
+
 php artisan migrate
 ```
 
-### JWT ENV
-[More documentation](https://jwt-auth.readthedocs.io/en/develop)
+#### 3. JWT ENV
+Run JWT environment. [More documentation](https://jwt-auth.readthedocs.io/en/develop)
 ```bash
 php artisan jwt:secret
 ```
