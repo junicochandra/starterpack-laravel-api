@@ -21,7 +21,7 @@ Welcome to StarterPack Laravel API! This is a project specifically designed to e
     Utilizes the Laravel API Documentation Package integrated with Swagger to generate automatic and interactive API documentation based on the source code.
     
 ## Getting Started
-#### 1. Installation
+### 1. Installation
 Clone this repository and follow the installation guide to set up your project quickly.
 ```bash
 git clone https://github.com/junicochandra/starterpack-laravel-api.git
@@ -31,7 +31,7 @@ Install Dependencies
 composer install
 ```
 
-#### 2. Configuration
+### 2. Configuration
 Customize the project configuration according to your application's needs, including database settings, environment configurations, and other variables.
 ```bash
 cp .env.example .env
@@ -43,7 +43,7 @@ php artisan key:generate
 php artisan migrate
 ```
 
-#### 3. JWT ENV
+### 3. JWT ENV
 Run JWT environment. [More documentation](https://jwt-auth.readthedocs.io/en/develop)
 ```bash
 php artisan jwt:secret
