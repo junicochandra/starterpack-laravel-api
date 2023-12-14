@@ -40,7 +40,7 @@ Once you've completed the setup of your environment, execute the following comma
 ```bash
 php artisan key:generate
 
-php artisan migrate
+php artisan migrate:fresh --seed
 ```
 
 ### 3. JWT ENV
