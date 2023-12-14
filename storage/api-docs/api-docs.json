@@ -18,7 +18,7 @@
                 "summary": "Register",
                 "operationId": "d764dd091cc4494ae0baf360b03319f3",
                 "requestBody": {
-                    "description": "Register Form",
+                    "description": "Input data format",
                     "required": true,
                     "content": {
                         "application/json": {
@@ -33,6 +33,9 @@
                                         "type": "string"
                                     },
                                     "email": {
+                                        "type": "string"
+                                    },
+                                    "role": {
                                         "type": "string"
                                     },
                                     "password": {
@@ -54,14 +57,11 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "format": "int32",
-                                            "example": 200
-                                        },
                                         "message": {
-                                            "type": "string",
-                                            "example": "Register successfull!"
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -70,28 +70,25 @@
                         }
                     },
                     "422": {
-                        "description": "Unprocessable entity error"
-                    },
-                    "500": {
-                        "description": "Failed operation",
+                        "description": "Invalid data",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "code": {
-                                            "type": "integer",
-                                            "format": "int32",
-                                            "example": 500
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Register fail!"
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
+                    },
+                    "500": {
+                        "description": "Server error"
                     }
                 }
             }
@@ -108,6 +105,10 @@
                     "content": {
                         "application/json": {
                             "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
                                 "properties": {
                                     "email": {
                                         "type": "string"
@@ -123,7 +124,25 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Get token"
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "access_token": {
+                                            "type": "string"
+                                        },
+                                        "token_type": {
+                                            "type": "string"
+                                        },
+                                        "expires_in": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "401": {
                         "description": "Unauthenticated"

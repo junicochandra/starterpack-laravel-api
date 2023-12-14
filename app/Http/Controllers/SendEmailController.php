@@ -6,6 +6,7 @@ use App\Jobs\RabbitSendEmailJob;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmailJob;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @OA\Tag(
@@ -56,9 +57,9 @@ class SendEmailController extends Controller
         try {
             $data = $request->json()->all();
             dispatch(new SendEmailJob($data));
-            return response()->json(['message' => 'Send email success!'], 200);
+            return response()->json(['message' => 'Send email success!'], Response::HTTP_OK);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error while processing the request', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Error while processing the request', 'error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -98,9 +99,9 @@ class SendEmailController extends Controller
         try {
             $data = $request->json()->all();
             dispatch(new RabbitSendEmailJob($data));
-            return response()->json(['message' => 'Send email success!'], 200);
+            return response()->json(['message' => 'Send email success!'], Response::HTTP_OK);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error while processing the request', 'error' => $e->getMessage()], 500);
+            return response()->json(['message' => 'Error while processing the request', 'error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 }

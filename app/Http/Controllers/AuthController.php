@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @OA\Tag(
@@ -34,11 +35,12 @@ class AuthController extends Controller
      *      tags={"Auth"},
      *      @OA\RequestBody(
      *          required=true,
-     *          description="Register Form",
+     *          description="Input data format",
      *          @OA\JsonContent(
      *              required={"name", "email", "password"},
      *              @OA\Property(property="name", type="string"),
      *              @OA\Property(property="email", type="string"),
+     *              @OA\Property(property="role", type="string"),
      *              @OA\Property(property="password", type="string"),
      *              @OA\Property(property="password_confirmation", type="string"),
      *          ),
@@ -47,54 +49,45 @@ class AuthController extends Controller
      *          response=200,
      *          description="Successful operation",
      *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="code", type="integer", format="int32", example=200),
-     *              @OA\Property(property="message", type="string", example="Register successfull!"),
+     *             @OA\Property(property="message", type="array", @OA\Items(type="string")),
      *          ),
      *      ),
      *      @OA\Response(
      *          response=422,
-     *          description="Unprocessable entity error"
+     *          description="Invalid data",
+     *          @OA\JsonContent(
+     *             @OA\Property(property="errors", type="array", @OA\Items(type="string")),
+     *          ),
      *      ),
      *      @OA\Response(
      *          response=500,
-     *          description="Failed operation",
-     *          @OA\JsonContent(
-     *              type="object",
-     *              @OA\Property(property="code", type="integer", format="int32", example=500),
-     *              @OA\Property(property="message", type="string", example="Register fail!"),
-     *          ),
-     *      )
+     *          description="Server error"
+     *      ),
      * )
      */
     public function register()
     {
-        $validator = Validator::make(request()->all(), [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password'=> 'required|confirmed',
-        ]);
-
-        if($validator->fails()){
-            return response()->json($validator->messages(), 422);
-        }
-
-        $user = User::create([
-            'name'=> request('name'),
-            'email'=> request('email'),
-            'password'=> Hash::make(request('password')),
-        ]);
-
-        if($user){
-            return response()->json([
-                'status' => 200,
-                'message' => 'Register successfull!'
+        try {
+            $validator = Validator::make(request()->all(), [
+                'name' => 'required',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|confirmed',
             ]);
-        }else{
-            return response()->json([
-                'status' => 500,
-                'message' => 'Register fail!'
+
+            if ($validator->fails()) {
+                return response()->json(['errors' => $validator->errors()], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            User::create([
+                'name' => request('name'),
+                'email' => request('email'),
+                'role' => request('role') ?? 2,
+                'password' => Hash::make(request('password')),
             ]);
+
+            return response()->json(['message' => 'Register successfull!'], Response::HTTP_OK);
+        } catch (\Exception $e) {
+            return response()->json(['errors' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -106,13 +99,19 @@ class AuthController extends Controller
      *      @OA\RequestBody(
      *          required=true,
      *          @OA\JsonContent(
+     *              required={"email", "password"},
      *              @OA\Property(property="email", type="string"),
      *              @OA\Property(property="password", type="string"),
      *          ),
      *      ),
-     *      @OA\Response(
+      *      @OA\Response(
      *          response=200,
-     *          description="Get token",
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *             @OA\Property(property="access_token", type="string"),
+     *             @OA\Property(property="token_type", type="string"),
+     *             @OA\Property(property="expires_in", type="string"),
+     *          ),
      *      ),
      *      @OA\Response(
      *          response=401,
@@ -125,17 +124,17 @@ class AuthController extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'email' => 'required|email',
-            'password'=> 'required',
+            'password' => 'required',
         ]);
 
-        if($validator->fails()){
-            return response()->json($validator->messages(), 422);
+        if ($validator->fails()) {
+            return response()->json($validator->messages(), Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(['errors' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
         }
 
         return $this->respondWithToken($token);
