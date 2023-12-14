@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Jobs\RabbitSendEmailJob;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmailJob;
+use Illuminate\Support\Facades\Validator;
 
 /**
  * @OA\Tag(
@@ -22,18 +23,16 @@ class SendEmailController extends Controller
     /**
      * @OA\Post(
      *      path="/api/module/email/send",
-     *      summary="Send Email",
+     *      summary="Send email with job Laravel ",
      *      tags={"Email"},
      *      @OA\RequestBody(
      *          required=true,
-     *          description="Send Email Form",
+     *          description="Input data format",
      *          @OA\JsonContent(
-     *              required={"email"},
-     *              @OA\Property(property="email", type="string"),
-     *              @OA\Property(property="subject", type="string"),
-     *              @OA\Property(property="from", type="string"),
-     *              @OA\Property(property="name", type="string"),
+     *              required={"to", "name", "subject"},
      *              @OA\Property(property="to", type="array", @OA\Items(type="string")),
+     *              @OA\Property(property="subject", type="string"),
+     *              @OA\Property(property="name", type="string"),
      *              @OA\Property(property="cc", type="array", @OA\Items(type="string")),
      *              @OA\Property(property="bcc", type="array", @OA\Items(type="string")),
      *              @OA\Property(property="content", type="string"),
@@ -41,12 +40,15 @@ class SendEmailController extends Controller
      *      ),
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation"
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *             @OA\Property(property="message", type="array", @OA\Items(type="string")),
+     *          ),
      *      ),
      *      @OA\Response(
-     *          response=500,
-     *          description="Failed operation"
-     *      )
+     *          response=400,
+     *          description="Invalid data",
+     *      ),
      * )
      */
     public function send(Request $request)
@@ -60,6 +62,37 @@ class SendEmailController extends Controller
         }
     }
 
+    /**
+     * @OA\Post(
+     *      path="/api/module/email/send-by-rabbitmq",
+     *      summary="Send email with RabbitMq ",
+     *      tags={"Email"},
+     *      @OA\RequestBody(
+     *          required=true,
+     *          description="Input data format",
+     *          @OA\JsonContent(
+     *              required={"to", "name", "subject"},
+     *              @OA\Property(property="to", type="array", @OA\Items(type="string")),
+     *              @OA\Property(property="subject", type="string"),
+     *              @OA\Property(property="name", type="string"),
+     *              @OA\Property(property="cc", type="array", @OA\Items(type="string")),
+     *              @OA\Property(property="bcc", type="array", @OA\Items(type="string")),
+     *              @OA\Property(property="content", type="string"),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *             @OA\Property(property="message", type="array", @OA\Items(type="string")),
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=400,
+     *          description="Invalid data",
+     *      ),
+     * )
+     */
     public function sendByRabbitMq(Request $request)
     {
         try {

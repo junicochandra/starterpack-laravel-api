@@ -32,7 +32,7 @@ class SendEmailJob implements ShouldQueue
     {
         try {
             $email = new SendEmail($this->data);
-            Mail::to($this->data['email'])->send($email);
+            Mail::send($email);
         } catch (\Exception $e) {
             Log::error('Error sending email: ' . $e->getMessage());
         }

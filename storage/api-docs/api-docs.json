@@ -211,35 +211,31 @@
                 "tags": [
                     "Email"
                 ],
-                "summary": "Send Email",
+                "summary": "Send email with job Laravel ",
                 "operationId": "888a51d4f07b49d75607b6e3a81d45f1",
                 "requestBody": {
-                    "description": "Send Email Form",
+                    "description": "Input data format",
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "email"
+                                    "to",
+                                    "name",
+                                    "subject"
                                 ],
                                 "properties": {
-                                    "email": {
-                                        "type": "string"
-                                    },
-                                    "subject": {
-                                        "type": "string"
-                                    },
-                                    "from": {
-                                        "type": "string"
-                                    },
-                                    "name": {
-                                        "type": "string"
-                                    },
                                     "to": {
                                         "type": "array",
                                         "items": {
                                             "type": "string"
                                         }
+                                    },
+                                    "subject": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
                                     },
                                     "cc": {
                                         "type": "array",
@@ -264,10 +260,102 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
-                    "500": {
-                        "description": "Failed operation"
+                    "400": {
+                        "description": "Invalid data"
+                    }
+                }
+            }
+        },
+        "/api/module/email/send-by-rabbitmq": {
+            "post": {
+                "tags": [
+                    "Email"
+                ],
+                "summary": "Send email with RabbitMq ",
+                "operationId": "f53aa0aab602eac1036e92b7936ba06f",
+                "requestBody": {
+                    "description": "Input data format",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "to",
+                                    "name",
+                                    "subject"
+                                ],
+                                "properties": {
+                                    "to": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "subject": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "cc": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "bcc": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "content": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid data"
                     }
                 }
             }
