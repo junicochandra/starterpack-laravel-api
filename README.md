@@ -11,14 +11,14 @@
 Welcome to StarterPack Laravel API! This is a project specifically designed to expedite the development of Laravel-based applications, with a primary focus on API development. By utilizing this StarterPack, you'll have a robust foundation for building reliable and efficient web services using Laravel, one of the most popular PHP frameworks.
 
 ## Key Features
--   ### Simplified Project Structure
-    StarterPack Laravel API provides a well-organized project structure, helping you avoid confusion in the initial project setup and allowing you to focus on feature development.
--   ### Integrated JWT Bearer Authentication
-    Experience secure authentication using the JWT Bearer token system. This integration allows for seamless and token-based user authentication, ensuring a high level of security for your API endpoints.
--   ### Send Email with Job Queue Laravel or RabbitMq
-    Enables asynchronous email sending using Laravel Job Queue or RabbitMQ to enhance performance and avoid execution blocking.
--   ### API Documentation
-    Utilizes the Laravel API Documentation Package integrated with Swagger to generate automatic and interactive API documentation based on the source code.
+- ### Simplified Project Structure
+  StarterPack Laravel API provides a well-organized project structure, helping you avoid confusion in the initial project setup and allowing you to focus on feature development.
+- ### Integrated JWT Bearer Authentication
+  Experience secure authentication using the JWT Bearer token system. This integration allows for seamless and token-based user authentication, ensuring a high level of security for your API endpoints.
+- ### Send Email with Job Queue Laravel or RabbitMq
+  Enables asynchronous email sending using Laravel Job Queue or RabbitMQ to enhance performance and avoid execution blocking.
+- ### API Documentation
+  Utilizes the Laravel API Documentation Package integrated with Swagger to generate automatic and interactive API documentation based on the source code.
     
 ## Getting Started
 ### 1. Installation
