@@ -24,8 +24,8 @@
           
             <main class="px-3">
                 <h1>StarterPack Laravel API</h1>
-                <p class="lead">Welcome to StarterPack Laravel API! This is a project specifically designed to expedite the development of Laravel-based applications, with a primary focus on API development. By utilizing this StarterPack, you'll have a robust foundation for building reliable and efficient web services using Laravel, one of the most popular PHP frameworks.</p>
-                <p class="lead">
+                <p class="lead fs-5 mt-4">Welcome to StarterPack Laravel API! This is a project specifically designed to expedite the development of Laravel-based applications, with a primary focus on API development. By utilizing this StarterPack, you'll have a robust foundation for building reliable and efficient web services using Laravel, one of the most popular PHP frameworks.</p>
+                <p class="lead mt-5">
                     <a href="/api/doc" class="btn btn-dark btn-lg border-white">Documentation</a>
                 </p>
             </main>
