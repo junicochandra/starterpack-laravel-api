@@ -1,0 +1,10 @@
+<?php
+
+namespace App\Modules\FileName\Application\Service;
+
+use App\Modules\FileName\Infrastructure\Repository\FileNameRepository;
+
+class FileNameService
+{
+    // Add your logic here
+}

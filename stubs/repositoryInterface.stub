@@ -1,0 +1,8 @@
+<?php
+
+namespace App\Modules\FileName\Domain\Repository;
+
+class FileNameRepository
+{
+    // Add your logic here
+}

@@ -1,0 +1,9 @@
+<?php
+
+namespace App\Modules\FileName\Application\DTO;
+
+class FileNameDTO
+{
+    public $id;
+    public $name;
+}

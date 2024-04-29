@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Modules\FileName\Application\Validation;
+
+class FileNameValidation
+{
+    public function check($request)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+    }
+}
